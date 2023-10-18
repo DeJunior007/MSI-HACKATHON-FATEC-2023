@@ -16,8 +16,11 @@ export default function Home() {
 
     const userNameToSave = user || "Usuário";
     sessionStorage.setItem("UserName", userNameToSave);
-
-    router.push("/dash");
+    if (user == "deilton") {
+      router.push("/usuario");
+    } else {
+      router.push("/dash");
+    }
   };
 
   return (
@@ -63,7 +66,9 @@ export default function Home() {
                 placeholder="Senha"
                 className="bg-transparent border-b my-4 border-slate-100/50 outline-none text-white"
               />
-              <p className="text-sm text-[#18a832] my-6 font-light underline">Esqueceu a senha?</p>
+              <p className="text-sm text-[#18a832] my-6 font-light underline">
+                Esqueceu a senha?
+              </p>
               <button
                 type="submit"
                 className="bg-slate-100 w-auto p-2 text-[#0E2A48] rounded-full sm:mt-auto lt:mt-[50%]  font-bold"
