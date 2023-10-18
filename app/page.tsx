@@ -69,13 +69,13 @@ export default function Home() {
               />
               <Link
                 href={"/recuperar-senha"}
-                className="text-sm text-[#18a832] my-6 font-light underline"
+                className="text-sm text-[#18a832] my-6 font-base underline"
               >
                 Esqueceu a senha?
               </Link>
               <button
                 type="submit"
-                className="bg-slate-100 w-auto p-2 text-[#0E2A48] rounded-full sm:mt-auto lt:mt-[50%]  font-bold"
+                className="bg-slate-100 w-auto p-2 text-[#0E2A48] rounded-full hover:scale-[1.1] ease-in-out duration-500 transition sm:mt-auto lt:mt-[50%]  font-bold"
               >
                 Entrar
               </button>
