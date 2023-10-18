@@ -2,13 +2,22 @@
 import DashUserHead from "./head";
 import { SetStateAction, useState } from "react";
 import Image from "next/image";
-import card from "../assets/imgs/usercard.png";
-import check from "../assets/imgs/check-mark.png";
+import check from "../../public/imgs/check-mark.png";
 import { horarios } from "../constants/lista";
-import logo from "../assets/imgs/msi-logo.png";
-import logoutIcon from "../assets/imgs/logout.png";
+import logo from "../../public/imgs/msi-logo.png";
+import logoutIcon from "../../public/imgs/logout.png";
 import { useRouter } from "next/navigation";
 import { Relogio } from "../components/relogio";
+import Swal, { SweetAlertResult } from "sweetalert2";
+import UserCard from "../components/card";
+import card from "../../public/imgs/usercard.png";
+
+interface AgendaItem {
+  funcao: string;
+  local: string;
+  horario: string;
+  confirmado: boolean;
+}
 
 export default function Dash() {
   const userName = sessionStorage.getItem("UserName") || "Usuário";
@@ -31,6 +40,77 @@ export default function Dash() {
   const horariosFiltrados = presenca.filter(
     (agenda) => agenda.dia === diaSelecionado
   );
+
+  const openFAQModal = () => {
+    Swal.fire({
+      title: "Dúvidas Mais Frequentes",
+      html: `
+        <p class="tit-faq">Por que não consigo registrar minha presença?</p>
+        <p class="texto-faq">
+          A validação da presença ocorre por meio da geolocalização.
+          Para que a validação seja bem-sucedida, é essencial que a pessoa esteja localizada a pelo menos 100 metros da obra.
+          Caso a distância não atenda a esse critério, a presença não será validada.
+        </p>
+      `,
+      icon: "info",
+      confirmButtonText: "Fechar",
+      confirmButtonColor: "#164C8B",
+    });
+  };
+
+  const handleCheckboxChange = async (index: number) => {
+    const isCanitar = horariosFiltrados[index]?.local === "Canitar";
+
+    const result = await Swal.fire({
+      title: "Confirmar presença",
+      text: "Você confirma sua presença nesta atividade?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Sim, confirmar",
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "#16498A",
+      iconColor: "#18A832",
+    });
+
+    if (result.isConfirmed) {
+      Swal.fire({
+        text: "Aguarde enquanto confirmamos sua localização",
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: async () => {
+          Swal.showLoading();
+          const b = Swal.getHtmlContainer().querySelector("b");
+          const timerInterval = setInterval(() => {
+            if (b) {
+              b.textContent = Swal.getTimerLeft().toString();
+            }
+          }, 200);
+
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+
+          clearInterval(timerInterval);
+
+          if (isCanitar) {
+            Swal.fire({
+              title: "Atenção!",
+              text: "Você está muito longe para realizar o registro de presença em Canitar.",
+              icon: "error",
+              confirmButtonColor: "#16498A",
+            });
+          } else {
+            Swal.fire({
+              icon: 'success',
+              title:
+                "Sua presença foi registrada com sucesso! Pode fechar o aplicativo!",
+              confirmButtonColor: "#1F97CA",
+              confirmButtonText: "Obrigado",
+            });
+          }
+        },
+      });
+    }
+  };
+
   return (
     <>
       <DashUserHead />
@@ -56,22 +136,20 @@ export default function Dash() {
           </div>
         </nav>
         <section className="p-4 flex flex-col justify-between">
-          <section className=" w-full flex  lt:flex-col md:flex-row justify-between items-center h-full mt-4">
+          <section className="w-full flex lt:flex-col md:flex-row justify-between items-center h-full mt-4">
             <div>
-              <div className="rounded-t flex flex-col items-center justify-center w-auto h-auto border-l border-r border-t">
-                <p className="text-lg p-1">{`Seja bem-vindo, ${userName}!`}</p>
-                <Image src={card} alt="vector de card do usuario" width={150} />
-                <p className="text-xl bg-[#16498A] text-slate-100 p-2 w-full text-center h-full rounded-b-lg font-bold">
-                  Confira sua agenda!
-                </p>{" "}
-              </div>
-              <p className="w-full text-center mt-2 text-[#164C8B] underline hover:cursor-pointer">
-                Duvidas?
-              </p>
+              <UserCard userName={userName} local={card} text="Sua agenda" />
+
+              <button
+                className="w-full text-center mt-2 text-[#164C8B] underline hover:cursor-pointer"
+                onClick={openFAQModal}
+              >
+                Dúvidas?
+              </button>
             </div>
 
-            <article className="lt:w-full md:w-[70%] lt:mt-4 md:mt-0 h-full self-start grid grid-cols-7 divide-x divide-300">
-              <div className="w-full flex justify-end col-span-7">
+            <article className="lt:w-full md:w-[70%] lt:mt-4 md:mt-0 h-full self-start grid lt:grid-cols-5 fd:grid-cols-7 divide-x divide-300">
+              <div className="w-full flex justify-end lt:col-span-5 fd:col-span-7">
                 <select
                   value={diaSelecionado}
                   className="border-[#16498A] border-2 mb-4 rounded-lg text-[#16498A] outline-none"
@@ -84,7 +162,7 @@ export default function Dash() {
                   <option value="4">Sexta-feira</option>
                 </select>
               </div>
-              <div className="bg-slate-300 py-1 text-center col-span-2 font-semibold text-lg rounded-tl">
+              <div className="bg-slate-300 py-1 text-center col-span-2 lt:hidden fd:block font-semibold text-lg rounded-tl">
                 Função
               </div>
               <div className="bg-slate-300 py-1 text-center col-span-2 font-semibold text-lg">
@@ -98,11 +176,11 @@ export default function Dash() {
               </div>
               {horariosFiltrados.map((agenda, index) => (
                 <article
-                  className={`lt:w-full col-span-7  h-full self-start grid grid-cols-7 ${
+                  className={`lt:w-full lt:col-span-5 fd:col-span-7  h-full self-start grid lt:grid-cols-5 fd:grid-cols-7 ${
                     index % 2 === 0 ? "bg-slate-100" : "bg-slate-300"
                   }`}
                 >
-                  <div className="text-center col-span-2 py-1" tabIndex={index}>
+                  <div className="text-center lt:hidden fd:block col-span-2 py-1" tabIndex={index}>
                     {agenda.funcao}
                   </div>
                   <div className="text-center col-span-2 py-1" tabIndex={index}>
@@ -111,8 +189,16 @@ export default function Dash() {
                   <div className="text-center col-span-2 py-1" tabIndex={index}>
                     {agenda.horario}
                   </div>
-                  <div className="text-center py-1" tabIndex={index}>
-                    <input className="accent-[#18A832]" type="checkbox" />
+                  <div
+                    className="text-center py-1"
+                    onClick={() => handleCheckboxChange(index)}
+                  >
+                    <input
+                      type="checkbox"
+                      className="accent-[#18A832] hover:cursor-pointer"
+                      checked={agenda.confirmado}
+                      onChange={() => {}}
+                    />
                   </div>
                 </article>
               ))}
