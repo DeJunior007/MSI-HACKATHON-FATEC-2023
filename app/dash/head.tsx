@@ -1,8 +1,8 @@
 export default function DashHead() {
   return (
     <>
-      <title>MSI - Dashboard</title>
-      <meta name="description" content="Tela principal" />
+      <title>MSI - Dashboard ADM</title>
+      <meta name="description" content="Tela principal para encarregados" />
     </>
   );
 }
