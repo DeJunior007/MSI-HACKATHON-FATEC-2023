@@ -2,3 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
+.report-modal {
+  display: flex;
+  height: auto;
+  flex-direction: column;
+  font-size: 16px;
+  width: 100%;
+  padding: 20px;
+}
+
+.funcionario-lista {
+  width: 100%;
+}
+
+.funcionario-nome-t {
+  font-weight: bold;
+  text-align: left;
+  padding-bottom: 1%;
+}
+.horario-batida-t {
+  text-align: right;
+  font-weight: bold;
+  padding-bottom: 1%;
+}
+.funcionario-nome {
+  text-align: left;
+  padding-bottom: 1%;
+}
+.horario-batida {
+  text-align: right;
+  padding-bottom: 1%;
+}
+.tit-faq {
+  text-align: center;
+  font-weight: bold;
+  padding-bottom: 1%;
+}
+.text-faq {
+  text-align: left;
+}
