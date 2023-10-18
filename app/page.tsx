@@ -15,7 +15,7 @@ export default function Home() {
     e.preventDefault();
 
     const userNameToSave = user || "Usuário";
-    localStorage.setItem("UserName", userNameToSave);
+    sessionStorage.setItem("UserName", userNameToSave);
 
     router.push("/dash");
   };
@@ -32,11 +32,11 @@ export default function Home() {
         <Image
           src={logo}
           alt="logo da MSI"
-          width={100}
+          width={75}
           className="absolute top-0 left-5 lt:hidden sm:block"
         />
         <section className="lt:w-full sm:w-[400px] h-[75vh] absolute sm:max-h-[600px] flex-col lt:p-6 sm:p-12 rounded ">
-          <div className="absolute inset-0 sm:border sm:backdrop-blur-lg rounded" />
+          <div className="absolute inset-0 sm:border border-slate-100/30 sm:backdrop-blur-lg rounded" />
           <Image
             src={logo}
             alt="logo da MSI"
@@ -54,15 +54,16 @@ export default function Home() {
             >
               <input
                 type="text"
-                placeholder="Login"
+                placeholder="Usuário"
                 onChange={UserChange}
-                className="bg-transparent border-b my-4 border-[#1B4878] outline-none text-white"
+                className="bg-transparent border-b my-4 border-slate-100/50 outline-none text-white"
               />
               <input
                 type="password"
                 placeholder="Senha"
-                className="bg-transparent border-b my-4 border-[#1B4878] outline-none text-white"
+                className="bg-transparent border-b my-4 border-slate-100/50 outline-none text-white"
               />
+              <p className="text-sm text-[#18a832] my-6 font-light underline">Esqueceu a senha?</p>
               <button
                 type="submit"
                 className="bg-slate-100 w-auto p-2 text-[#0E2A48] rounded-full sm:mt-auto lt:mt-[50%]  font-bold"
