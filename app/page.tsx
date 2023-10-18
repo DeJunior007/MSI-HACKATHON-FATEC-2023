@@ -3,8 +3,9 @@ import LoginHead from "./head";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import background from "./assets/imgs/bg.svg";
-import logo from "./assets/imgs/msi-logo.png";
+import background from "../public/imgs/bg.svg";
+import logo from "../public/imgs/msi-logo.png";
+import Link from "next/link";
 export default function Home() {
   const [user, setUser] = useState("");
   const UserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,9 +67,12 @@ export default function Home() {
                 placeholder="Senha"
                 className="bg-transparent border-b my-4 border-slate-100/50 outline-none text-white"
               />
-              <p className="text-sm text-[#18a832] my-6 font-light underline">
+              <Link
+                href={"/recuperar-senha"}
+                className="text-sm text-[#18a832] my-6 font-light underline"
+              >
                 Esqueceu a senha?
-              </p>
+              </Link>
               <button
                 type="submit"
                 className="bg-slate-100 w-auto p-2 text-[#0E2A48] rounded-full sm:mt-auto lt:mt-[50%]  font-bold"
