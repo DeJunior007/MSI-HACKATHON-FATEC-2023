@@ -1,36 +1,19 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# MSI Projeto
 
-## Getting Started
+Projeto desenvolvido para o Hackathon Cooperativo da Fatec Ourinhos 2023, fornecido pela MSI Soluções. Este projeto utiliza Next.js 13 e Tailwind CSS.
 
-First, run the development server:
+## Como Iniciar
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Clone o repositório
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Instale as dependências com Yarn
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Inicie o aplicativo
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Sobre o Projeto
 
-## Learn More
+Projeto desenvolvido para o Hackathon Cooperativo da Fatec Ourinhos 2023, fornecido pela MSI Soluções.
 
-To learn more about Next.js, take a look at the following resources:
+### Tela de Login
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+A tela de login não requer preenchimento dos dados, apenas para enfatizar o fluxo. Este projeto é voltado para fins de demonstração e não exige dados de login válidos.
